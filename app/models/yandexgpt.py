@@ -15,13 +15,13 @@ class YandexGPT(BaseModel):
     }
 
     def __init__(
-            self,
-            token: str,
-            folder_id: str,
-            model_name: str = "lite",
-            system_prompt: Optional[str] = None,
-            temperature: float = 0.6,
-            max_tokens: int = 2000,
+        self,
+        token: str,
+        folder_id: str,
+        model_name: str = "lite",
+        system_prompt: Optional[str] = None,
+        temperature: float = 0.6,
+        max_tokens: int = 2000,
     ) -> None:
         super().__init__(system_prompt)
         self.api_url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
@@ -36,9 +36,6 @@ class YandexGPT(BaseModel):
             "temperature": temperature,
             "maxTokens": str(max_tokens),
         }
-        self.messages = []
-        if self.system_prompt:
-            self.messages.append({"role": "system", "text": self.system_prompt})
 
     def ask(self, user_message: str, clear_history: bool = True) -> Optional[str]:
         if clear_history:
