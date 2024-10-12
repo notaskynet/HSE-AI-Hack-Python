@@ -3,8 +3,10 @@ from typing import Optional
 
 import requests
 
+from app.models.base import BaseModel
 
-class YandexGPT:
+
+class YandexGPT(BaseModel):
     """See more on https://yandex.cloud/en-ru/docs/foundation-models/concepts/yandexgpt/models"""
 
     model_urls = {
@@ -21,6 +23,7 @@ class YandexGPT:
             temperature: float = 0.6,
             max_tokens: int = 2000,
     ) -> None:
+        super().__init__(system_prompt)
         self.api_url = "https://llm.api.cloud.yandex.net/foundationModels/v1/completion"
         self.headers = {
             "Content-Type": "application/json",
@@ -34,11 +37,14 @@ class YandexGPT:
             "maxTokens": str(max_tokens),
         }
         self.messages = []
-        if system_prompt:
-            self.messages.append({"role": "system", "text": system_prompt})
+        if self.system_prompt:
+            self.messages.append({"role": "system", "text": self.system_prompt})
 
-    def ask(self, user_message: str) -> Optional[str]:
-        """Send a message to the assistant and return the assistant's response."""
+    def ask(self, user_message: str, clear_history: bool = True) -> Optional[str]:
+        if clear_history:
+            self.messages = []
+            if self.system_prompt:
+                self.messages.append({"role": "system", "text": self.system_prompt})
 
         self.messages.append({"role": "user", "text": user_message})
 

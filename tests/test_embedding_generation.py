@@ -12,5 +12,5 @@ def test():
     print(f"Cosine Similarity: {cos_sim.item():.4f}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test()
