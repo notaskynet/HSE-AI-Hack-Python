@@ -67,6 +67,6 @@ if __name__ == "__main__":
     yandex_gpt = YandexGPT(
         token=os.environ["YANDEX_GPT_IAM_TOKEN"],
         folder_id=os.environ["YANDEX_GPT_FOLDER_ID"],
-        system_prompt="Ты - профессиональный биолог. Отвечай коротко и по делу.",
+        system_prompt="Ты - профессиональный биолог. Отвечай коротко и по делу в научных терминах.",
     )
-    print(yandex_gpt.ask("Какие самые популярные виды сороконожек в России? Сколько у каждого вида ног?"))
+    print(yandex_gpt.ask("Кто такой манул?"))
