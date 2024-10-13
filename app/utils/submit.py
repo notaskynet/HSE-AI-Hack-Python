@@ -5,8 +5,9 @@ import torch
 from transformers import BertModel, BertTokenizer
 
 print("Loading models...", end="")
-tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-model = BertModel.from_pretrained("bert-base-uncased")
+model_name = "DeepPavlov/rubert-base-cased-sentence"
+tokenizer = BertTokenizer.from_pretrained(model_name)
+model = BertModel.from_pretrained(model_name)
 print("OK")
 
 
