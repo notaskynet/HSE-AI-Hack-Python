@@ -25,7 +25,7 @@ def calculate_score(submit_path: str, gt_path: str) -> float:
     submit_df = pd.read_csv(submit_path)
     true_df = pd.read_excel(gt_path)
     submit_df = submit_df[submit_df["solution_id"].isin(true_df["id"])]
-    return _get_cosine_similarity(submit_df, true_df)
+    return (_get_cosine_similarity(submit_df, true_df) - 0.6) / 0.4
 
 
 def calculate_score_and_save(submit_path: str, gt_path: str, save_path: str) -> float:
