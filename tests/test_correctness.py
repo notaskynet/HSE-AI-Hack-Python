@@ -2,7 +2,7 @@ import pandas as pd
 
 from app.utils.submit import string2embedding
 
-TEST_SIZE = 347
+TEST_SIZE = 325
 EMBEDDING_SIZE = 768
 
 
