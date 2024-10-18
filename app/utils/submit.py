@@ -27,21 +27,47 @@ def embedding2string(embedding: torch.Tensor) -> str:
     return " ".join([str(i) for i in embedding.tolist()])
 
 
-def generate_submit(test_solutions_path: str, predict_func: Callable, save_path: str, use_tqdm: bool = True) -> None:
-    test_solutions = pd.read_excel(test_solutions_path)
-    bar = range(len(test_solutions))
+def generate_submit(data_path: str, predict_func: Callable, save_path: str, use_tqdm: bool = True) -> None:
+    df_solutions = pd.read_excel(f'{data_path}/solutions.xlsx')
+    df_tasks = pd.read_excel(f'{data_path}/tasks.xlsx')
+    df_tests = pd.read_excel(f'{data_path}/tests.xlsx')
+
+    bar = range(len(df_solutions))
     if use_tqdm:
         import tqdm
-
         bar = tqdm.tqdm(bar, desc="Predicting")
 
     submit_df = pd.DataFrame(columns=["solution_id", "author_comment", "author_comment_embedding"])
     for i in bar:
-        idx = test_solutions.index[i]
-        solution_row = test_solutions.iloc[i]
+        idx = df_solutions.index[i]
+        solution_row = df_solutions.iloc[i]
 
-        text = predict_func(solution_row)  # here you can do absolute whatever you want
+        student_code = solution_row['student_solution']
+        task_id = solution_row['task_id']
 
+        # Исправлено обращение к DataFrame
+        task_row = df_tasks.loc[df_tasks['id'] == task_id]
+        if task_row.empty:
+            print(f"Task with id {task_id} not found.")
+            continue
+        task = task_row['description'].values[0]
+        author_code = task_row['author_solution'].values[0]
+
+        # Исправлено обращение к тестам
+        tests = df_tests[df_tests['task_id'] == task_id]
+
+        user_data = {
+            'task': task,
+            'student_code': student_code,
+            'author_code': author_code,
+            'tests': tests
+        }
+
+        text = predict_func(user_data)  # Вызов пользовательской функции для генерации комментариев
+
+        # Генерация эмбеддингов
         embedding = embedding2string(get_sentence_embedding(text))
         submit_df.loc[i] = [idx, text, embedding]
+
+    # Сохранение результата
     submit_df.to_csv(save_path, index=False)
