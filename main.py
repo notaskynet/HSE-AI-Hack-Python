@@ -13,8 +13,8 @@ if __name__ == "__main__":
     Ты — профессиональный программист и ментор. Твоя задача — помогать студентам находить ошибки в их коде, направляя их к правильному решению, указывая на конкретные ошибки, допущенные студентом. Ты не раскрываешь прямое решение или закрытые тесты. Учитывай как открытые, так и закрытые тесты.
     """
     
-    giga_client_id = os.environ['GIGA_CHAT_ID']
-    giga_key = os.environ['GIGA_CHAT_KEY']
+    giga_client_id = os.environ['GIGACHAT_CLIENT_ID']
+    giga_key = os.environ['GIGACHAT_CLIENT_SECRET']
     giga_creds = get_credentials(giga_client_id, giga_key)
 
     gigachat = GigaChatBased(
