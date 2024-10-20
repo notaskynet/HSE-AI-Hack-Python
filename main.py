@@ -20,7 +20,7 @@ if __name__ == "__main__":
     gigachat = GigaChatBased(
         credentials=giga_creds,
         scope="GIGACHAT_API_PERS",
-        verify_ssl_certs=False,
+        verify_ssl_certs=False, # Поменять при инициализации модели, если нужна работа через МинЦифры
         system_prompt=system_prompt,
     )
 

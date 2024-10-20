@@ -13,11 +13,22 @@
 
 ## Build
 
+Установка окружения:
+
 ```bash
 python3 -m env env
 poetry install
 pip3 install gigachain-community
 ```
+
+Установка сертификатов МинЦифры (для безопасной работы приложения):
+
+```bash
+pip install gigachain-cli
+gigachain install-rus-certs
+```
+
+Установка переменных окружения (нужно для работы с GigaChat, нужно зарегистрироваться [тут](https://developers.sber.ru/studio/registration) через СберID):
 
 ```bash
 export GIGACHAT_CLIENT_ID='ЗДЕСЬ ДОЛЖЕН БЫТЬ ВАШ ID КЛИЕНТА'
